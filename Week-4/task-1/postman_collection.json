@@ -1,0 +1,93 @@
+{
+    "info": {
+        "_postman_id": "evolvix-week4-titanic-api",
+        "name": "EvolviX Week 4 - Titanic API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Home",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://127.0.0.1:8000/",
+                    "protocol": "http",
+                    "host": [
+                        "127.0.0.1"
+                    ],
+                    "port": "8000"
+                }
+            }
+        },
+        {
+            "name": "Health Check",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://127.0.0.1:8000/health",
+                    "protocol": "http",
+                    "host": [
+                        "127.0.0.1"
+                    ],
+                    "port": "8000"
+                }
+            }
+        },
+        {
+            "name": "Prediction - Valid",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"Age\": 25,\n    \"Fare\": 30.0,\n    \"Sex\": \"female\",\n    \"sibsp\": 1,\n    \"Parch\": 0,\n    \"Pclass\": 2,\n    \"Embarked\": \"S\"\n}"
+                },
+                "url": {
+                    "raw": "http://127.0.0.1:8000/predict",
+                    "protocol": "http",
+                    "host": [
+                        "127.0.0.1"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "predict"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Prediction - Invalid Input",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"Age\": 25,\n    \"Fare\": 30.0,\n    \"Sex\": \"unknown\",\n    \"sibsp\": 1,\n    \"Parch\": 0,\n    \"Pclass\": 2,\n    \"Embarked\": \"S\"\n}"
+                },
+                "url": {
+                    "raw": "http://127.0.0.1:8000/predict",
+                    "protocol": "http",
+                    "host": [
+                        "127.0.0.1"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "predict"
+                    ]
+                }
+            }
+        }
+    ]
+}

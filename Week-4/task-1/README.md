@@ -1,115 +1,90 @@
-# Week 4 - Task 1: Titanic Survival Prediction API
+# Week 4 - Task 1: Serve a Trained Model as a REST API
 
 ## Overview
 
-This project serves a trained **Titanic Survival Prediction model** as a REST API using **FastAPI**.
+This project serves a trained Titanic Survival Prediction model through a REST API using FastAPI.
 
-The model is a **Random Forest Classifier** trained on Titanic passenger data. The API accepts passenger information and predicts whether the passenger survived or not.
+The model is a Random Forest Classifier based on the Titanic work from Week 2.
 
-## Technologies Used
+## Dataset
 
-* Python
-* FastAPI
-* Uvicorn
-* Pandas
-* Scikit-learn
-* Random Forest
-* Joblib
-* Postman
+Dataset: `train_and_test2.csv`
+
+Main input features:
+
+- Age
+- Fare
+- Sex
+- sibsp
+- Parch
+- Pclass
+- Embarked
+- FamilySize
+- AgeGroup
+
+Target:
+
+- Survived: 0 = Not Survived
+- Survived: 1 = Survived
 
 ## Project Structure
 
 ```text
-week-4-task-1/
-│
+Task-1/
 ├── app.py
 ├── train_model.py
 ├── download_dataset.py
+├── model.pkl
+├── train_and_test2.csv
 ├── requirements.txt
 ├── postman_collection.json
 ├── sample_request.json
-├── .gitignore
 └── README.md
 ```
 
-## Dataset
+## 1. Install Requirements
 
-The project uses the Titanic dataset.
-
-### Features
-
-* Age
-* Fare
-* Sex
-* sibsp
-* Parch
-* Pclass
-* Embarked
-* FamilySize
-* AgeGroup
-
-### Target
-
-* `0` = Not Survived
-* `1` = Survived
-
-## Installation
-
-Open the terminal inside the project folder and install the required libraries:
+Open terminal inside this folder:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Download Dataset
-
-Run:
+## 2. Download Dataset
 
 ```bash
 python download_dataset.py
 ```
 
-This downloads `train_and_test2.csv`.
-
-## Train the Model
-
-Run:
+## 3. Train the Model
 
 ```bash
 python train_model.py
 ```
 
-This trains the Random Forest model and creates:
+This creates:
 
 ```text
 model.pkl
 ```
 
-## Run the FastAPI Server
-
-Start the API using:
+## 4. Start the API
 
 ```bash
 uvicorn app:app --reload
 ```
 
-The API will run at:
+API will run at:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-## Swagger API Documentation
-
-FastAPI provides automatic API documentation.
-
-Open:
+Swagger documentation:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
-
-From there, the API endpoints can be tested directly in the browser.
 
 ## API Endpoints
 
@@ -127,7 +102,7 @@ Example response:
 
 ### GET /health
 
-Checks the API and model status.
+Checks API/model health.
 
 Example response:
 
@@ -140,9 +115,9 @@ Example response:
 
 ### POST /predict
 
-Predicts Titanic passenger survival.
+Accepts passenger information and returns the model prediction.
 
-Example request:
+Request:
 
 ```json
 {
@@ -166,80 +141,64 @@ Example response:
 }
 ```
 
-The confidence value may change depending on the trained model.
+The exact confidence value can change depending on the trained model.
 
 ## Input Validation
 
-The API validates passenger information before making a prediction.
+The API validates:
 
-Examples:
+- Age must be between 0 and 100.
+- Fare cannot be negative.
+- Pclass must be 1, 2 or 3.
+- Sex must be male or female.
+- Embarked must be C, Q or S.
+- sibsp and Parch must be valid non-negative integers.
 
-* Age must be between 0 and 100.
-* Fare cannot be negative.
-* Pclass must be 1, 2, or 3.
-* Sex must be `male` or `female`.
-* Embarked must be `C`, `Q`, or `S`.
-* `sibsp` and `Parch` must be non-negative integers.
+Missing required fields are also rejected automatically by FastAPI/Pydantic.
 
 ## Postman Testing
 
-The project includes:
+Import:
 
 ```text
 postman_collection.json
 ```
 
-Import this file into Postman to test the API.
-
-The collection includes:
+The collection contains:
 
 1. Home endpoint
 2. Health endpoint
 3. Valid prediction request
 4. Invalid input request
 
-## How It Works
+## How Model Serving Works
 
 ```text
-Passenger Data
-      ↓
+Client
+   |
+   | JSON Request
+   v
 FastAPI
-      ↓
-Input Validation
-      ↓
-Feature Engineering
-      ↓
-Random Forest Model
-      ↓
-Prediction + Confidence
-      ↓
+   |
+   | Input Validation
+   v
+Trained Random Forest Model
+   |
+   | Prediction
+   v
 JSON Response
-```
-
-## Model
-
-A **Random Forest Classifier** is used for prediction.
-
-The model uses preprocessing for numerical and categorical features and performs feature engineering using:
-
-* FamilySize
-* AgeGroup
-
-The trained pipeline is saved as:
-
-```text
-model.pkl
 ```
 
 ## Conclusion
 
-This project demonstrates how a trained machine learning model can be deployed as a REST API using FastAPI.
+The trained Titanic model was successfully wrapped in a FastAPI REST API. The API accepts passenger information in JSON format, validates the input, sends it to the trained model, and returns the predicted survival class with confidence.
 
-The API receives passenger information, validates the input, performs the required feature engineering, sends the data to the Random Forest model, and returns the predicted survival result with confidence.
+## Technologies
 
-## Author
-
-**Muhammad Bilal**
-
-Week 4 - Task 1
-AI/ML Internship
+- Python
+- FastAPI
+- Uvicorn
+- Pandas
+- Scikit-learn
+- Random Forest
+- Postman
