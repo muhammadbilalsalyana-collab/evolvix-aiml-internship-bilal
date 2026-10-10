@@ -38,17 +38,18 @@ with st.form("prediction_form"):
     predict = st.form_submit_button("Predict Survival")
 
 if predict:
-    data = pd.DataFrame([{
-        "Passengerid": passengerid,
-        "Pclass": pclass,
-        "Sex": sex,
-        "Age": age,
-        "SibSp": sibsp,
-        "Parch": parch,
-        "Fare": fare,
-        "Embarked": embarked,
-        "sibsp": sibsp
-    }])
+    
+passenger = pd.DataFrame([{
+    "Passengerid": passengerid,
+    "Pclass": pclass,
+    "Sex": 1 if sex == "female" else 0,
+    "Age": age,
+    "SibSp": sibsp,
+    "Parch": parch,
+    "Fare": fare,
+    "Embarked": {"S": 0, "C": 1, "Q": 2}[embarked]
+}])
+
 
     expected = getattr(model, "feature_names_in_", None)
 
