@@ -26,6 +26,7 @@ st.info(
 )
 
 with st.form("prediction_form"):
+    passengerid = st.number_input("Passenger ID", min_value=1, value=1)
     pclass = st.selectbox("Passenger Class", [1, 2, 3])
     sex = st.selectbox("Gender", ["male", "female"])
     age = st.slider("Age", 1, 80, 25)
@@ -38,6 +39,7 @@ with st.form("prediction_form"):
 
 if predict:
     data = pd.DataFrame([{
+        "Passengerid": passengerid,
         "Pclass": pclass,
         "Sex": sex,
         "Age": age,
