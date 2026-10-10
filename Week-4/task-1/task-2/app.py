@@ -49,7 +49,7 @@ if predict:
         "Pclass": pclass,
         "Sex": 1 if sex == "female" else 0,
         "Age": age,
-        "SibSp": sibsp,
+       "sibsp": sibsp,
         "Parch": parch,
         "Fare": fare,
         "Embarked": {"S": 0, "C": 1, "Q": 2}[embarked]
