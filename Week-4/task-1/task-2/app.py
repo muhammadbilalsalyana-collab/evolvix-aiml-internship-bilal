@@ -1,10 +1,12 @@
 
+
 from pathlib import Path
 import joblib
 import streamlit as st
 import pandas as pd
 
 MODEL_PATH = Path(__file__).parent / "titanic_logistic_regression.pkl"
+
 
 @st.cache_resource
 def load_model():
@@ -17,16 +19,19 @@ except Exception as e:
     st.error(f"Model loading failed: {e}")
     st.stop()
 
+
 st.title("🚢 Titanic Survival Predictor")
 st.write("Enter passenger details to predict survival.")
 
 st.info(
-    "This app provides an educational prediction. "
-    "Results are estimates and may be incorrect."
+    "This app provides educational predictions. "
+    "Results may be incorrect."
 )
 
 with st.form("prediction_form"):
-    passengerid = st.number_input("Passenger ID", min_value=1, value=1)
+    passengerid = st.number_input(
+        "Passenger ID", min_value=1, value=1
+    )
     pclass = st.selectbox("Passenger Class", [1, 2, 3])
     sex = st.selectbox("Gender", ["male", "female"])
     age = st.slider("Age", 1, 80, 25)
@@ -37,30 +42,26 @@ with st.form("prediction_form"):
 
     predict = st.form_submit_button("Predict Survival")
 
-if predict:
-    
-passenger = pd.DataFrame([{
-    "Passengerid": passengerid,
-    "Pclass": pclass,
-    "Sex": 1 if sex == "female" else 0,
-    "Age": age,
-    "SibSp": sibsp,
-    "Parch": parch,
-    "Fare": fare,
-    "Embarked": {"S": 0, "C": 1, "Q": 2}[embarked]
-}])
 
+if predict:
+    data = pd.DataFrame([{
+        "Passengerid": passengerid,
+        "Pclass": pclass,
+        "Sex": 1 if sex == "female" else 0,
+        "Age": age,
+        "SibSp": sibsp,
+        "Parch": parch,
+        "Fare": fare,
+        "Embarked": {"S": 0, "C": 1, "Q": 2}[embarked]
+    }])
 
     expected = getattr(model, "feature_names_in_", None)
 
     if expected is not None:
-        missing = [c for c in expected if c not in data.columns]
+        missing = [col for col in expected if col not in data.columns]
 
         if missing:
-            st.error(
-                "Model input features do not match the app. "
-                f"Missing: {missing}"
-            )
+            st.error(f"Missing model features: {missing}")
             st.stop()
 
         data = data[list(expected)]
@@ -75,14 +76,18 @@ passenger = pd.DataFrame([{
 
         if hasattr(model, "predict_proba"):
             probability = model.predict_proba(data)[0]
-            st.write(
-                f"Estimated survival probability: "
-                f"{probability[list(model.classes_).index(1)] * 100:.2f}%"
-            )
+            classes = list(model.classes_)
+
+            if 1 in classes:
+                survival_prob = probability[classes.index(1)] * 100
+                st.write(
+                    f"Estimated survival probability: "
+                    f"{survival_prob:.2f}%"
+                )
 
     except Exception as e:
         st.error(f"Prediction failed: {e}")
-        st.write(
-            "The model's input columns or preprocessing may differ "
-            "from the app. Check the original training code."
+        st.warning(
+            "The model's input format or preprocessing "
+            "does not match the app."
         )
