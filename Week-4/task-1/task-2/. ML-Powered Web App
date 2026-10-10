@@ -1,0 +1,129 @@
+# 🚢 Titanic Survival Predictor — ML-Powered Web App
+
+An interactive machine learning web application that predicts passenger survival on the Titanic based on passenger details. Built with Python and Streamlit, this project demonstrates how a trained machine learning model can be integrated into a user-friendly interface and deployed as a public web application.
+
+## 🎯 Project Objective
+
+The objective of this project is to build and deploy a usable web interface for a trained machine learning model, demonstrating the practical application of model serving and deployment.
+
+This project is part of the **Evolvix AI/ML Internship Program — Week 4, Task 2: Applied AI & Model Deployment**.
+
+## ✨ Features
+
+- Interactive user interface built with Streamlit.
+- Passenger information input form.
+- Survival prediction using a trained Logistic Regression model.
+- Prediction results displayed in a simple, understandable format.
+- Model explanation and limitations for users.
+- Public deployment for easy access.
+
+## 🛠️ Technologies Used
+
+- **Python** — application development
+- **Streamlit** — web interface
+- **Pandas** — data handling
+- **Scikit-learn** — machine learning
+- **Joblib** — model loading
+
+## 🧠 Machine Learning Model
+
+The application uses a previously trained Logistic Regression model saved as a `.pkl` file.
+
+The model uses passenger-related features to predict one of two classes:
+
+- **Survived**
+- **Did Not Survive**
+
+The application must provide the same input features and preprocessing expected by the original trained model.
+
+## 📁 Project Structure
+
+```text
+week-4/
+└── task-2/
+    ├── app.py
+    ├── requirements.txt
+    ├── titanic_logistic_regression.pkl
+    └── README.md
+```
+
+## ⚙️ Installation and Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+```
+
+### 2. Navigate to the Project Folder
+
+```bash
+cd week-4/task-2
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the Application
+
+```bash
+streamlit run app.py
+```
+
+The application will open locally in your browser, usually at:
+
+`http://localhost:8501`
+
+## 🌐 Live Demo
+
+**Live Application:** Add your deployed Streamlit URL here.
+
+## 🚀 Deployment
+
+The application is intended to be deployed using **Streamlit Community Cloud**.
+
+Deployment steps:
+
+1. Push the project files to GitHub.
+2. Sign in to Streamlit Community Cloud using GitHub.
+3. Select the repository and the `week-4/task-2/app.py` entry point.
+4. Deploy the application.
+5. Test the public URL to verify that predictions work correctly.
+
+## ⚠️ Model Limitations
+
+- Predictions are estimates based on historical Titanic passenger data.
+- The model may produce incorrect predictions.
+- Results depend on the input data and the preprocessing used during training.
+- Historical patterns may not generalize to other populations or situations.
+- This application is intended for educational and demonstration purposes only.
+
+## 📚 Learning Outcomes
+
+Through this project, I aim to demonstrate:
+
+- Integrating a trained ML model into a web interface.
+- Building an interactive application with Streamlit.
+- Managing Python dependencies for deployment.
+- Deploying a machine learning application publicly.
+- Communicating model functionality and limitations.
+
+## 👨‍💻 Internship Information
+
+**Program:** Evolvix AI/ML Internship Program  
+**Week:** 4  
+**Task:** 2 — ML-Powered Web App with a UI  
+**Focus:** Applied AI & Model Deployment
+
+## 🔗 Project Links
+
+- **GitHub Repository:** Add your repository URL here.
+- **Live Application:** Add your deployed application URL here.
+- **LinkedIn Demo:** Add your LinkedIn post URL here.
+
+---
+
+*Evolvix — Evolve. Innovate. Excel.*
