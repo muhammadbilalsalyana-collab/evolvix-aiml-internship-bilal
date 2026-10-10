@@ -3,7 +3,10 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-st.set_page_config(page_title="Titanic Predictor", page_icon="🚢")
+from pathlib import Path
+
+MODEL_PATH = Path(__file__).parent / "titanic_logistic_regression.pkl"
+
 
 @st.cache_resource
 def load_model():
