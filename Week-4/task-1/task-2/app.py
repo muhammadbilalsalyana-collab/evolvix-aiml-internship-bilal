@@ -1,16 +1,15 @@
 
+from pathlib import Path
+import joblib
 import streamlit as st
 import pandas as pd
-import joblib
-
-from pathlib import Path
 
 MODEL_PATH = Path(__file__).parent / "titanic_logistic_regression.pkl"
 
-
 @st.cache_resource
 def load_model():
-    return joblib.load("titanic_logistic_regression.pkl")
+    return joblib.load(MODEL_PATH)
+
 
 try:
     model = load_model()
